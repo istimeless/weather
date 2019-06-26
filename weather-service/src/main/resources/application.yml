@@ -1,0 +1,15 @@
+weather:
+  heWeather: 
+    url: https://free-api.heweather.net/s6/weather/now?
+    username: HE1906251736561552
+    key: 5c4dd85e60a64b8fb2be24202a168dc8
+  senWeather:
+    url: https://api.seniverse.com/v3/weather/
+    privateKey: Sym9Q75p9QWApefSL
+    publicKey: P7EXBAbC3jsGDVK1d
+spring:
+  jackson:
+    default-property-inclusion: non_null
+  redis:
+    port: 6379
+    host: 127.0.0.1

@@ -1,0 +1,8 @@
+zuul:
+  routes:
+    weather:
+      path: /weather/**
+      serviceId: weather-collect-amap-service
+    city:
+      path: /city/**
+      serviceId: weather-city-amap-service
