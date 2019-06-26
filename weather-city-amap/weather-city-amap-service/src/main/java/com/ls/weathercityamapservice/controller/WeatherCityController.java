@@ -2,12 +2,10 @@ package com.ls.weathercityamapservice.controller;
 
 import com.ls.weathercityamapclient.vo.CityRequest;
 import com.ls.weathercityamapclient.vo.CityResponse;
-import com.ls.weathercityamapclient.vo.District;
 import com.ls.weathercityamapservice.service.WeatherCityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * @author lijiayin
