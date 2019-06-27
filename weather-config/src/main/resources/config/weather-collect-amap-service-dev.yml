@@ -1,6 +1,7 @@
 weather:
   amap:
-    url: https://restapi.amap.com/v3/weather/weatherInfo?
-    key: *
+    basic:
+      url: https://restapi.amap.com/v3/weather/weatherInfo?
+      key: *
 
 

@@ -3,14 +3,13 @@ package com.ls.weathercityamapservice.service.impl;
 import com.ls.weathercityamapclient.vo.CityRequest;
 import com.ls.weathercityamapclient.vo.CityResponse;
 import com.ls.weathercityamapservice.constant.WeatherConstant;
-import com.ls.weathercityamapservice.properties.WeatherProperties;
 import com.ls.weathercityamapservice.service.WeatherCityService;
+import com.ls.weathercommon.properties.WeatherProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.TimeUnit;
@@ -51,9 +50,9 @@ public class WeatherCityServiceImpl implements WeatherCityService {
     
     private String getRequestUrl(CityRequest request){
         StringBuilder url = new StringBuilder();
-        url.append(properties.getUrl());
+        url.append(properties.getAmap().getCity().getUrl());
         url.append("key=");
-        url.append(properties.getKey());
+        url.append(properties.getAmap().getCity().getKey());
         if(StringUtils.isNotBlank(request.getKeywords())){
             url.append("&keywords=");
             url.append(request.getKeywords());

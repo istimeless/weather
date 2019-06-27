@@ -3,8 +3,8 @@ package com.ls.weathercollectamapservice.service.impl;
 import com.ls.weathercollectamapclient.vo.WeatherResponse;
 import com.ls.weathercollectamapservice.constant.WeatherConstant;
 import com.ls.weathercollectamapservice.enums.WeatherTypeEnum;
-import com.ls.weathercollectamapservice.properties.WeatherProperties;
 import com.ls.weathercollectamapservice.service.CollectWeatherService;
+import com.ls.weathercommon.properties.WeatherProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -40,8 +40,8 @@ public class CollectWeatherServiceImpl implements CollectWeatherService {
         if(resp != null){
             return resp;
         }
-        String url = properties.getUrl() + "extensions=" + type.getCode() 
-                + "&city=" + city + "&key=" + properties.getKey();
+        String url = properties.getAmap().getBasic().getUrl() + "extensions=" + type.getCode() 
+                + "&city=" + city + "&key=" + properties.getAmap().getBasic().getKey();
         WeatherResponse weatherResponse = restTemplateOut.getForObject(url, WeatherResponse.class);
         redisTemplate.opsForValue().set(key, weatherResponse, WeatherConstant.CACHE_TIME, TimeUnit.HOURS);
         return weatherResponse;

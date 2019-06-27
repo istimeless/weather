@@ -42,6 +42,7 @@
         <weather-collect-amap-client>0.0.1-SNAPSHOT</weather-collect-amap-client>
         <weather-city-amap-client>0.0.1-SNAPSHOT</weather-city-amap-client>
         <weather-common>0.0.1-SNAPSHOT</weather-common>
+        <ratelimit>2.2.3.RELEASE</ratelimit>
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
     </properties>
 
@@ -125,6 +126,11 @@
                 <groupId>com.ls</groupId>
                 <artifactId>weather-city-amap-client</artifactId>
                 <version>${weather-city-amap-client}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.marcosbarbero.cloud</groupId>
+                <artifactId>spring-cloud-zuul-ratelimit</artifactId>
+                <version>${ratelimit}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

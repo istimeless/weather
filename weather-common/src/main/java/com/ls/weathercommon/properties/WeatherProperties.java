@@ -1,4 +1,4 @@
-package com.ls.weathercityamapservice.properties;
+package com.ls.weathercommon.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,8 +9,11 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "weather.amap")
+@ConfigurationProperties(prefix = "weather")
 public class WeatherProperties {
-    private String url;
-    private String key;
+    
+    private AmapProperties amap;
+    
+    private GatewayProperties gateway;
+    
 }

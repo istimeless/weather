@@ -6,3 +6,18 @@ zuul:
     city:
       path: /city/**
       serviceId: weather-city-amap-service
+  ratelimit:
+    enabled: true
+    repository: redis
+    policy-list:
+      weather:
+        - limit: 1
+          refresh-interval: 1
+          type:
+            - origin
+      city:
+        - limit: 1
+          refresh-interval: 1
+          type:
+            - origin
+    
