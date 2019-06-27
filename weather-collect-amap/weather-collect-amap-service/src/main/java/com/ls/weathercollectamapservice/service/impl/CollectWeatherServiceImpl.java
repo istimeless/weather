@@ -43,7 +43,9 @@ public class CollectWeatherServiceImpl implements CollectWeatherService {
         String url = properties.getAmap().getBasic().getUrl() + "extensions=" + type.getCode() 
                 + "&city=" + city + "&key=" + properties.getAmap().getBasic().getKey();
         WeatherResponse weatherResponse = restTemplateOut.getForObject(url, WeatherResponse.class);
-        redisTemplate.opsForValue().set(key, weatherResponse, WeatherConstant.CACHE_TIME, TimeUnit.HOURS);
+        if(weatherResponse != null && weatherResponse.getCount() > 0){
+            redisTemplate.opsForValue().set(key, weatherResponse, WeatherConstant.CACHE_TIME, TimeUnit.HOURS);
+        }
         return weatherResponse;
     }
 }

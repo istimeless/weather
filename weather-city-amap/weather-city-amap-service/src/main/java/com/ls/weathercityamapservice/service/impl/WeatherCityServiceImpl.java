@@ -44,7 +44,9 @@ public class WeatherCityServiceImpl implements WeatherCityService {
         }
         String url = getRequestUrl(request);
         CityResponse cityResponse = restTemplateOut.getForObject(url, CityResponse.class);
-        redisTemplate.opsForValue().set(key, cityResponse, WeatherConstant.CACHE_TIME, TimeUnit.HOURS);
+        if(cityResponse != null){
+            redisTemplate.opsForValue().set(key, cityResponse, WeatherConstant.CACHE_TIME, TimeUnit.HOURS);
+        }
         return cityResponse;
     }
     
