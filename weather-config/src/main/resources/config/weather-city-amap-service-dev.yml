@@ -2,6 +2,6 @@ weather:
   amap:
     city:
       url: https://restapi.amap.com/v3/config/district?
-      key: *
+      key: 7302cb4144922709c2f4d337a3895476
 
 
