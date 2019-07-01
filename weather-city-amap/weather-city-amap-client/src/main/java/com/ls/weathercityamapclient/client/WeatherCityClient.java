@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author lijiayin
  */
@@ -30,8 +33,25 @@ public interface WeatherCityClient {
     @PostMapping("/city/city/cityInfo")
     CityResponse cityInfo(CityRequest request);
 
+    /**
+     * 获取全部城市信息，区级
+     * @return
+     */
+    @GetMapping("/city/city/cityCode")
+    List<String> allCityCode();
+
+    /**
+     * 获取城市名称-城市编码
+     * @param request
+     * @return
+     */
+    @GetMapping("/cityMap")
+    Map<Object, Object> cityMap(CityRequest request);
+
     @Component
     class WeatherCityClientFallBack implements WeatherCityClient{
+
+
         @Override
         public String cityCode(String city) {
             return null;
@@ -39,6 +59,16 @@ public interface WeatherCityClient {
 
         @Override
         public CityResponse cityInfo(CityRequest request) {
+            return null;
+        }
+
+        @Override
+        public List<String> allCityCode() {
+            return null;
+        }
+
+        @Override
+        public Map<Object, Object> cityMap(CityRequest request) {
             return null;
         }
     }

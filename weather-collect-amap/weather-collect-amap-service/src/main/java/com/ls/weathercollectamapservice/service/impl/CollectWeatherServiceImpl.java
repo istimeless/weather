@@ -11,6 +11,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -47,5 +50,17 @@ public class CollectWeatherServiceImpl implements CollectWeatherService {
             redisTemplate.opsForValue().set(key, weatherResponse, WeatherConstant.CACHE_TIME, TimeUnit.HOURS);
         }
         return weatherResponse;
+    }
+
+    @Override
+    public void collectAllWeatherInfo(List<String> cityCode) {
+        ExecutorService live = Executors.newFixedThreadPool(50);
+        ExecutorService forecast = Executors.newFixedThreadPool(50);
+        cityCode.forEach(city -> {
+            live.execute(() -> collectWeatherInfo(city, WeatherTypeEnum.ALL));
+            forecast.execute(() -> collectWeatherInfo(city, WeatherTypeEnum.BASE));
+        });
+        live.shutdown();
+        forecast.shutdown();
     }
 }

@@ -1,7 +1,9 @@
 package com.ls.weathercityamapservice.service.impl;
 
+import com.google.common.collect.Maps;
 import com.ls.weathercityamapclient.vo.CityRequest;
 import com.ls.weathercityamapclient.vo.CityResponse;
+import com.ls.weathercityamapclient.vo.District;
 import com.ls.weathercityamapservice.constant.WeatherConstant;
 import com.ls.weathercityamapservice.service.WeatherCityService;
 import com.ls.weathercommon.properties.WeatherProperties;
@@ -10,8 +12,13 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -43,13 +50,79 @@ public class WeatherCityServiceImpl implements WeatherCityService {
             return resp;
         }
         String url = getRequestUrl(request);
+        log.info("请求城市信息url：{}", url);
         CityResponse cityResponse = restTemplateOut.getForObject(url, CityResponse.class);
         if(cityResponse != null){
             redisTemplate.opsForValue().set(key, cityResponse, WeatherConstant.CACHE_TIME, TimeUnit.HOURS);
         }
         return cityResponse;
     }
-    
+
+    @Override
+    @SuppressWarnings("all")
+    public List<String> cityCode(CityRequest request) {
+        String key = WeatherConstant.CACHE_PREFIX + "city:list:" + request.hashCode();
+        List<String> resp = (List<String>)redisTemplate.opsForValue().get(key);
+        if(!CollectionUtils.isEmpty(resp)){
+            return resp;
+        }
+        CityResponse cityResponse = cityInfo(request);
+        List<String> cityCode = new ArrayList<>();
+        if(cityResponse != null){
+           addCityCode(cityResponse.getDistricts(), cityCode);
+        }
+        redisTemplate.opsForValue().set(key, cityCode);
+        return cityCode;
+    }
+
+    @Override
+    public Map<Object, Object> cityMap(CityRequest request) {
+        String key = WeatherConstant.CACHE_PREFIX + "city:map:" + request.hashCode();
+        Map<Object, Object> resp = redisTemplate.opsForHash().entries(key);
+        if(!CollectionUtils.isEmpty(resp)){
+            return resp;
+        }
+        
+        CityResponse cityResponse = cityInfo(request);
+        Map<Object, Object> cityMap = Maps.newHashMap();
+        if(cityResponse != null){
+            addCityMap(cityResponse.getDistricts(), cityMap);
+        }
+        redisTemplate.opsForHash().putAll(key,cityMap);
+        return cityMap;
+    }
+
+    @Override
+    public String cityCode(String cityName) {
+        String key = WeatherConstant.CACHE_PREFIX + "city:map:" + WeatherConstant.ALL_CITY.hashCode();
+        Boolean hasKey = redisTemplate.opsForHash().hasKey(key, cityName);
+        if(hasKey){
+            return (String)redisTemplate.opsForHash().get(key, cityName);
+        }
+        Map<Object, Object> cityMap = cityMap(WeatherConstant.ALL_CITY);
+        return String.valueOf(cityMap.get(cityName));
+    }
+
+    private void addCityMap(List<District> districts, Map<Object, Object> cityMap){
+        if(CollectionUtils.isEmpty(districts)){
+            return;
+        }
+        districts.forEach(district -> {
+            cityMap.put(district.getName(), district.getAdcode());
+            addCityMap(district.getDistricts(), cityMap);
+        });
+    }
+
+    private void addCityCode(List<District> districts, List<String> cityCode){
+        if(CollectionUtils.isEmpty(districts)){
+            return;
+        }
+        districts.forEach(district -> {
+            cityCode.add(district.getAdcode());
+            addCityCode(district.getDistricts(), cityCode);
+        });
+    }
+
     private String getRequestUrl(CityRequest request){
         StringBuilder url = new StringBuilder();
         url.append(properties.getAmap().getCity().getUrl());

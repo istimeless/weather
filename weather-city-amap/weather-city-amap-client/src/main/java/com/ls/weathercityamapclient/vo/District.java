@@ -1,5 +1,6 @@
 package com.ls.weathercityamapclient.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class District {
     /**
      * 城市编码
      */
+    @JsonIgnore
     private String citycode;
 
     /**

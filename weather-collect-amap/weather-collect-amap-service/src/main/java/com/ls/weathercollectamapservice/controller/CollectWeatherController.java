@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author lijiayin
  */
@@ -39,5 +41,11 @@ public class CollectWeatherController {
     public WeatherResponse forecast(@PathVariable("city")String city){
         String cityCode = weatherCityClient.cityCode(city);
         return collectWeatherService.collectWeatherInfo(cityCode, WeatherTypeEnum.ALL);
+    }
+
+    @GetMapping("/all")
+    public void loadAll(){
+        List<String> cityCode = weatherCityClient.allCityCode();
+        collectWeatherService.collectAllWeatherInfo(cityCode);
     }
 }
