@@ -16,13 +16,13 @@
     <packaging>pom</packaging>
     
     <modules>
-        <module>weather-service</module>
         <module>weather-common</module>
         <module>weather-collect-amap</module>
         <module>weather-city-amap</module>
         <module>weather-eureka</module>
         <module>weather-config</module>
         <module>weather-gateway</module>
+        <module>weather-web</module>
     </modules>
 
     <properties>

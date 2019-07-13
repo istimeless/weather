@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.ls</groupId>
-        <artifactId>weather-city-amap</artifactId>
+        <artifactId>weather-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>com.ls</groupId>
-    <artifactId>weather-city-amap-service</artifactId>
+    <artifactId>weather-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>weather-city-amap-service</name>
+    <name>weather-web</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -21,8 +21,13 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -39,11 +44,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.ls</groupId>
             <artifactId>weather-common</artifactId>
@@ -51,6 +51,10 @@
         <dependency>
             <groupId>com.ls</groupId>
             <artifactId>weather-city-amap-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ls</groupId>
+            <artifactId>weather-collect-amap-client</artifactId>
         </dependency>
     </dependencies>
 

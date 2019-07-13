@@ -23,6 +23,10 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-openfeign-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ls</groupId>
+            <artifactId>weather-common</artifactId>
+        </dependency>
     </dependencies>
     
 

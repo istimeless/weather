@@ -5,7 +5,10 @@ import com.ls.weathercityamapclient.vo.CityRequest;
 import com.ls.weathercityamapclient.vo.CityResponse;
 import com.ls.weathercityamapclient.vo.District;
 import com.ls.weathercityamapservice.constant.WeatherConstant;
+import com.ls.weathercityamapservice.service.GetCityService;
 import com.ls.weathercityamapservice.service.WeatherCityService;
+import com.ls.weathercommon.enums.ExceptionEnum;
+import com.ls.weathercommon.exception.GlobalException;
 import com.ls.weathercommon.properties.WeatherProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -15,10 +18,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author lijiayin
@@ -27,138 +31,94 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class WeatherCityServiceImpl implements WeatherCityService {
     
-    private final WeatherProperties properties;
-    
-    private final RestTemplate restTemplateOut;
-    
     private final RedisTemplate<String, Object> redisTemplate;
+    
+    private final GetCityService getCityService;
 
     @Autowired
-    public WeatherCityServiceImpl(WeatherProperties properties, RestTemplate restTemplateOut, 
-                                  RedisTemplate<String, Object> redisTemplate) {
-        this.properties = properties;
-        this.restTemplateOut = restTemplateOut;
+    public WeatherCityServiceImpl(RedisTemplate<String, Object> redisTemplate, GetCityService getCityService) {
         this.redisTemplate = redisTemplate;
+        this.getCityService = getCityService;
     }
 
     @Override
-    public CityResponse cityInfo(CityRequest request) {
-        String key = WeatherConstant.CACHE_PREFIX + "city:" + request.hashCode();
-        CityResponse resp = (CityResponse)redisTemplate.opsForValue().get(key);
-        if(resp != null){
-            return resp;
+    public Map<String, String> getCityCodeByCityName(String cityName) {
+        String key = WeatherConstant.CACHE_PREFIX + "city:name-code-key:" + cityName + "*";
+        Set<String> keys = redisTemplate.keys(key);
+        if(!CollectionUtils.isEmpty(keys)){
+            return getCityCodeMap(keys);
         }
-        String url = getRequestUrl(request);
-        log.info("请求城市信息url：{}", url);
-        CityResponse cityResponse = restTemplateOut.getForObject(url, CityResponse.class);
-        if(cityResponse != null){
-            redisTemplate.opsForValue().set(key, cityResponse, WeatherConstant.CACHE_TIME, TimeUnit.HOURS);
+        cityNameCodeKey();
+        keys = redisTemplate.keys(key);
+        if(!CollectionUtils.isEmpty(keys)){
+            return getCityCodeMap(keys);
+        }else {
+            throw new GlobalException(ExceptionEnum.CITY_NOT_EXIST);
         }
-        return cityResponse;
     }
 
-    @Override
-    @SuppressWarnings("all")
-    public List<String> cityCode(CityRequest request) {
-        String key = WeatherConstant.CACHE_PREFIX + "city:list:" + request.hashCode();
-        List<String> resp = (List<String>)redisTemplate.opsForValue().get(key);
-        if(!CollectionUtils.isEmpty(resp)){
-            return resp;
-        }
-        CityResponse cityResponse = cityInfo(request);
-        List<String> cityCode = new ArrayList<>();
-        if(cityResponse != null){
-           addCityCode(cityResponse.getDistricts(), cityCode);
-        }
-        redisTemplate.opsForValue().set(key, cityCode);
-        return cityCode;
+    private Map<String, String> getCityCodeMap(Set<String> keys) {
+        Map<String, String> map = Maps.newHashMap();
+        keys.forEach(name -> {
+            String code = (String)redisTemplate.opsForValue().get(name);
+            name = name.substring(name.lastIndexOf(":"));
+            map.put(name, code);
+        });
+        return map;
     }
 
+
     @Override
-    public Map<Object, Object> cityMap(CityRequest request) {
-        String key = WeatherConstant.CACHE_PREFIX + "city:map:" + request.hashCode();
+    public Map<Object, Object> cityCodeNameMap(CityRequest request) {
+        String key = WeatherConstant.CACHE_PREFIX + "city:code-name-map:" + request.hashCode();
         Map<Object, Object> resp = redisTemplate.opsForHash().entries(key);
         if(!CollectionUtils.isEmpty(resp)){
             return resp;
         }
-        
-        CityResponse cityResponse = cityInfo(request);
+
+        CityResponse cityResponse = getCityService.cityInfo(request);
         Map<Object, Object> cityMap = Maps.newHashMap();
         if(cityResponse != null){
-            addCityMap(cityResponse.getDistricts(), cityMap);
+            addCityCodeName(cityResponse.getDistricts().get(0).getDistricts(), cityMap);
         }
         redisTemplate.opsForHash().putAll(key,cityMap);
         return cityMap;
     }
-
-    @Override
-    public String cityCode(String cityName) {
-        String key = WeatherConstant.CACHE_PREFIX + "city:map:" + WeatherConstant.ALL_CITY.hashCode();
-        Boolean hasKey = redisTemplate.opsForHash().hasKey(key, cityName);
+    
+    /**
+     * 城市名称-城市编码
+     * @return
+     */
+    private void cityNameCodeKey() {
+        Boolean hasKey = redisTemplate.hasKey(WeatherConstant.CACHE_PREFIX + "city:name-code-key:南京市");
         if(hasKey){
-            return (String)redisTemplate.opsForHash().get(key, cityName);
+            return;
         }
-        Map<Object, Object> cityMap = cityMap(WeatherConstant.ALL_CITY);
-        return String.valueOf(cityMap.get(cityName));
+        CityResponse cityResponse = getCityService.cityInfo(WeatherConstant.ALL_CITY);
+        Map<String, String> cityMap = Maps.newHashMap();
+        if(cityResponse != null){
+            addCityNameCode(cityResponse.getDistricts(), cityMap);
+        }
+        redisTemplate.opsForValue().multiSet(cityMap);
     }
-
-    private void addCityMap(List<District> districts, Map<Object, Object> cityMap){
+    
+    private void addCityNameCode(List<District> districts, Map<String, String> cityMap){
         if(CollectionUtils.isEmpty(districts)){
             return;
         }
         districts.forEach(district -> {
-            cityMap.put(district.getName(), district.getAdcode());
-            addCityMap(district.getDistricts(), cityMap);
+            cityMap.put(WeatherConstant.CACHE_PREFIX + "city:name-code-key:" + district.getName(), district.getAdcode());
+            addCityNameCode(district.getDistricts(), cityMap);
         });
     }
 
-    private void addCityCode(List<District> districts, List<String> cityCode){
+    private void addCityCodeName(List<District> districts, Map<Object, Object> cityMap){
         if(CollectionUtils.isEmpty(districts)){
             return;
         }
         districts.forEach(district -> {
-            cityCode.add(district.getAdcode());
-            addCityCode(district.getDistricts(), cityCode);
+            cityMap.put(district.getAdcode(), district.getName());
+            addCityCodeName(district.getDistricts(), cityMap);
         });
-    }
-
-    private String getRequestUrl(CityRequest request){
-        StringBuilder url = new StringBuilder();
-        url.append(properties.getAmap().getCity().getUrl());
-        url.append("key=");
-        url.append(properties.getAmap().getCity().getKey());
-        if(StringUtils.isNotBlank(request.getKeywords())){
-            url.append("&keywords=");
-            url.append(request.getKeywords());
-        }
-        if(request.getSubdistrict() != null){
-            url.append("&subdistrict=");
-            url.append(request.getSubdistrict());
-        }
-        if(request.getPage() != null){
-            url.append("&page=");
-            url.append(request.getPage());
-        }
-        if(request.getOffset() != null){
-            url.append("&offset=");
-            url.append(request.getOffset());
-        }
-        if(StringUtils.isNotBlank(request.getExtensions())){
-            url.append("&extensions=");
-            url.append(request.getExtensions());
-        }
-        if(StringUtils.isNotBlank(request.getFilter())){
-            url.append("&filter=");
-            url.append(request.getFilter());
-        }
-        if(StringUtils.isNotBlank(request.getCallback())){
-            url.append("&callback=");
-            url.append(request.getCallback());
-        }
-        if(StringUtils.isNotBlank(request.getOutput())){
-            url.append("&output=");
-            url.append(request.getOutput());
-        }
-        return url.toString();
     }
 }

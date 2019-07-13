@@ -1,15 +1,14 @@
 package com.ls.weathercityamapclient.client;
 
-import com.ls.weathercityamapclient.vo.CityRequest;
-import com.ls.weathercityamapclient.vo.CityResponse;
+import com.ls.weathercommon.enums.ExceptionEnum;
+import com.ls.weathercommon.vo.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author lijiayin
@@ -18,58 +17,32 @@ import java.util.Map;
 public interface WeatherCityClient {
 
     /**
-     * 获取city编码
-     * @param city
+     * 根据城市名称获取城市编码
+     * @param cityName
      * @return
      */
-    @GetMapping("/city/city/cityCode/{city}")
-    String cityCode(@PathVariable("city") String city);
+    @GetMapping("/city/city/cityCode/{cityName}")
+    Result<Map<String, String>> cityNameCodeMap(@PathVariable("cityName") String cityName);
 
     /**
-     * 获取city信息
-     * @param request
+     * 根据城市编码，获取当前城市的下一级城市
+     * @param cityCode
      * @return
      */
-    @PostMapping("/city/city/cityInfo")
-    CityResponse cityInfo(CityRequest request);
-
-    /**
-     * 获取全部城市信息，区级
-     * @return
-     */
-    @GetMapping("/city/city/cityCode")
-    List<String> allCityCode();
-
-    /**
-     * 获取城市名称-城市编码
-     * @param request
-     * @return
-     */
-    @GetMapping("/cityMap")
-    Map<Object, Object> cityMap(CityRequest request);
+    @GetMapping("/city/city/cityCodeNameMap/{cityCode}")
+    Result<Map<Object, Object>> cityCodeNameMap(@PathVariable(value = "cityCode", required = false) String cityCode);
 
     @Component
     class WeatherCityClientFallBack implements WeatherCityClient{
 
-
         @Override
-        public String cityCode(String city) {
-            return null;
+        public Result<Map<String, String>> cityNameCodeMap(String cityName) {
+            return Result.failure(ExceptionEnum.SERVICE_FAIL);
         }
 
         @Override
-        public CityResponse cityInfo(CityRequest request) {
-            return null;
-        }
-
-        @Override
-        public List<String> allCityCode() {
-            return null;
-        }
-
-        @Override
-        public Map<Object, Object> cityMap(CityRequest request) {
-            return null;
+        public Result<Map<Object, Object>> cityCodeNameMap(String cityCode) {
+            return Result.failure(ExceptionEnum.SERVICE_FAIL);
         }
     }
 }

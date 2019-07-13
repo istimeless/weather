@@ -1,13 +1,12 @@
 package com.ls.weathercollectamapservice.service;
 
-import com.ls.weathercollectamapservice.enums.WeatherTypeEnum;
 import com.ls.weathercollectamapclient.vo.WeatherResponse;
-
+import com.ls.weathercollectamapservice.enums.WeatherTypeEnum;
 
 /**
  * @author lijiayin
  */
-public interface CollectWeatherService {
+public interface GetWeatherService {
 
     /**
      * 查询天气信息

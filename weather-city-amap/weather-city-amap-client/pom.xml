@@ -27,6 +27,10 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ls</groupId>
+            <artifactId>weather-common</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

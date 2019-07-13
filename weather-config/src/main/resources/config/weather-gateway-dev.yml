@@ -11,12 +11,12 @@ zuul:
     repository: redis
     policy-list:
       weather:
-        - limit: 1
+        - limit: 100
           refresh-interval: 1
           type:
             - origin
       city:
-        - limit: 1
+        - limit: 100
           refresh-interval: 1
           type:
             - origin

@@ -1,6 +1,8 @@
 package com.ls.weathercollectamapclient.client;
 
 import com.ls.weathercollectamapclient.vo.WeatherResponse;
+import com.ls.weathercommon.enums.ExceptionEnum;
+import com.ls.weathercommon.vo.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +20,7 @@ public interface WeatherCollectClient {
      * @return
      */
     @GetMapping("/weather/collect/live/{city}")
-    WeatherResponse live(@PathVariable("city") String city);
+    Result<WeatherResponse> live(@PathVariable("city") String city);
 
     /**
      * 查询天气预报
@@ -26,18 +28,18 @@ public interface WeatherCollectClient {
      * @return
      */
     @GetMapping("/weather/collect/forecast/{city}")
-    WeatherResponse forecast(@PathVariable("city")String city);
+    Result<WeatherResponse> forecast(@PathVariable("city")String city);
 
     @Component
     class WeatherCollectClientFallBack implements WeatherCollectClient{
         @Override
-        public WeatherResponse live(String city) {
-            return null;
+        public Result<WeatherResponse> live(String city) {
+            return Result.failure(ExceptionEnum.SERVICE_FAIL);
         }
 
         @Override
-        public WeatherResponse forecast(String city) {
-            return null;
+        public Result<WeatherResponse> forecast(String city) {
+            return Result.failure(ExceptionEnum.SERVICE_FAIL);
         }
     }
 }
