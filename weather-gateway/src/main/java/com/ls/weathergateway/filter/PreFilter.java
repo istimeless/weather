@@ -4,6 +4,7 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,13 @@ public class PreFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
+        RequestContext context = RequestContext.getCurrentContext();
+        HttpServletRequest request = context.getRequest();
+        String requestURI = request.getRequestURI();
+        log.info("requestURI: {}", requestURI);
+//        if(requestURI.equalsIgnoreCase("/authorize")){
+//            
+//        }
         return true;
     }
 
@@ -37,7 +45,8 @@ public class PreFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         RequestContext context = RequestContext.getCurrentContext();
         HttpServletRequest request = context.getRequest();
-        log.info("requestURI: {}", request.getRequestURI());
+//        context.setSendZuulResponse(false);
+//        context.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
         return null;
     }
 }

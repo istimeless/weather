@@ -21,13 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class CollectWeatherController {
     
     private final CollectWeatherService collectWeatherService;
-    
-    private final WeatherCityClient weatherCityClient;
 
     @Autowired
-    public CollectWeatherController(CollectWeatherService collectWeatherService, WeatherCityClient weatherCityClient) {
+    public CollectWeatherController(CollectWeatherService collectWeatherService) {
         this.collectWeatherService = collectWeatherService;
-        this.weatherCityClient = weatherCityClient;
     }
 
     @GetMapping("/live/{city}")

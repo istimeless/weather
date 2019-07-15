@@ -33,7 +33,7 @@ public class WeatherCityController {
      * @return
      */
     @GetMapping("/cityCode/{cityName}")
-    public Result<Map<String, String>> cityNameCodeMap(@PathVariable("cityName") String cityName){
+    public Result<Map<String, String>> getCityCodeByCityName(@PathVariable("cityName") String cityName){
         return Result.success(weatherCityService.getCityCodeByCityName(cityName));
     }
 

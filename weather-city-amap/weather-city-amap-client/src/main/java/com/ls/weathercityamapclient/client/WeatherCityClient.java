@@ -22,7 +22,7 @@ public interface WeatherCityClient {
      * @return
      */
     @GetMapping("/city/city/cityCode/{cityName}")
-    Result<Map<String, String>> cityNameCodeMap(@PathVariable("cityName") String cityName);
+    Result<Map<String, String>> getCityCodeByCityName(@PathVariable("cityName") String cityName);
 
     /**
      * 根据城市编码，获取当前城市的下一级城市
@@ -36,7 +36,7 @@ public interface WeatherCityClient {
     class WeatherCityClientFallBack implements WeatherCityClient{
 
         @Override
-        public Result<Map<String, String>> cityNameCodeMap(String cityName) {
+        public Result<Map<String, String>> getCityCodeByCityName(String cityName) {
             return Result.failure(ExceptionEnum.SERVICE_FAIL);
         }
 
