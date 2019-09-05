@@ -7,11 +7,10 @@ spring:
       server:
         native:
           search-locations: classpath:/config/
+    nacos:
+      discovery:
+        server-addr: 106.12.88.80:8848
   profiles:
     active: native
 server:
   port: 6000
-eureka:
-  client:
-    service-url:
-      defaultZone: http://127.0.0.1:8000/eureka/

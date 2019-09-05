@@ -9,20 +9,15 @@ import com.ls.weathercityamapservice.service.GetCityService;
 import com.ls.weathercityamapservice.service.WeatherCityService;
 import com.ls.weathercommon.enums.ExceptionEnum;
 import com.ls.weathercommon.exception.GlobalException;
-import com.ls.weathercommon.properties.WeatherProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * @author lijiayin

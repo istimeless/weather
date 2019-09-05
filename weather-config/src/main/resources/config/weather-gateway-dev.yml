@@ -6,6 +6,9 @@ zuul:
     city:
       path: /city/**
       serviceId: weather-city-amap-service
+    web:
+      path: /center/**
+      serviceId: weather-web
   ratelimit:
     enabled: true
     repository: redis

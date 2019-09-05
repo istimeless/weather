@@ -13,9 +13,8 @@ spring:
       discovery:
         enabled: true
         service-id: weather-config
+    nacos:
+      discovery:
+        server-addr: 106.12.88.80:8848
 server:
   port: 9001
-eureka:
-  client:
-    service-url:
-      defaultZone: http://127.0.0.1:8000/eureka/
