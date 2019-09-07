@@ -1,0 +1,15 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    default-property-inclusion: non_null
+  redis:
+    host: 106.12.88.80
+    port: 3100
+    password: 1qaz@WSX
+    lettuce:
+      pool:
+        min-idle: 0
+        max-wait: -1
+        max-idle: 8
+        max-active: 8

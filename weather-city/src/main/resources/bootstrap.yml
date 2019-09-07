@@ -1,0 +1,10 @@
+server:
+  port: 19000
+spring:
+  application:
+    name: weather-city
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 106.12.88.80:8848
+    

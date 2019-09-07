@@ -5,10 +5,10 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.5.RELEASE</version>
+        <version>2.1.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.ls</groupId>
+    <groupId>com.istimeless</groupId>
     <artifactId>weather-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>weather-parent</name>
@@ -16,13 +16,16 @@
     <packaging>pom</packaging>
     
     <modules>
+        <module>weather-city</module>
         <module>weather-common</module>
+        <module>weather-redis</module>
         <module>weather-collect-amap</module>
         <module>weather-city-amap</module>
         <module>weather-eureka</module>
         <module>weather-config</module>
         <module>weather-gateway</module>
         <module>weather-web</module>
+        <module>weather-commons</module>
     </modules>
 
     <properties>
@@ -120,9 +123,15 @@
                 <artifactId>okhttp</artifactId>
                 <version>${okhttp}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.istimeless</groupId>
+                <artifactId>weather-common</artifactId>
+                <version>${weather-common}</version>
+            </dependency>
             <dependency>
                 <groupId>com.ls</groupId>
-                <artifactId>weather-common</artifactId>
+                <artifactId>weather-commons</artifactId>
                 <version>${weather-common}</version>
             </dependency>
             <dependency>

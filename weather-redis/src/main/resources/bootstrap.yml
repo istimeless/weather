@@ -1,0 +1,9 @@
+server:
+  port: 17000
+spring:
+  application:
+    name: weather-redis
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 106.12.88.80:8848

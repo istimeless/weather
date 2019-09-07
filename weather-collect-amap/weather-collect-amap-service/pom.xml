@@ -50,7 +50,7 @@
         </dependency>
         <dependency>
             <groupId>com.ls</groupId>
-            <artifactId>weather-common</artifactId>
+            <artifactId>weather-commons</artifactId>
         </dependency>
         <dependency>
             <groupId>com.ls</groupId>
