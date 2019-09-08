@@ -5,6 +5,10 @@ spring:
     nacos:
       discovery:
         server-addr: 106.12.88.80:8848
+    sentinel:
+      transport:
+        #指定sentinel控制台地址
+        dashboard: 106.12.88.80:8080
   main:
     allow-bean-definition-overriding: true
   datasource:
