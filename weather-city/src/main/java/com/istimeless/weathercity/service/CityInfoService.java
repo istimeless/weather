@@ -1,8 +1,8 @@
 package com.istimeless.weathercity.service;
 
 import com.istimeless.weathercity.properties.CityProperties;
-import com.istimeless.weathercity.vo.CityRequest;
-import com.istimeless.weathercity.vo.CityResponse;
+import com.istimeless.weathercommon.vo.CityRequest;
+import com.istimeless.weathercommon.vo.CityResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;

@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.7.RELEASE</version>
+        <version>2.1.8.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.istimeless</groupId>
@@ -19,13 +19,9 @@
         <module>weather-city</module>
         <module>weather-common</module>
         <module>weather-redis</module>
-        <module>weather-collect-amap</module>
-        <module>weather-city-amap</module>
-        <module>weather-eureka</module>
-        <module>weather-config</module>
+        <module>weather-info</module>
         <module>weather-gateway</module>
         <module>weather-web</module>
-        <module>weather-commons</module>
     </modules>
 
     <properties>
@@ -44,9 +40,9 @@
         <okhttp>3.10.0</okhttp>
         <weather-collect-amap-client>0.0.1-SNAPSHOT</weather-collect-amap-client>
         <weather-city-amap-client>0.0.1-SNAPSHOT</weather-city-amap-client>
-        <weather-common>0.0.1-SNAPSHOT</weather-common>
+        <weather-version>0.0.1-SNAPSHOT</weather-version>
         <ratelimit>2.2.3.RELEASE</ratelimit>
-        <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
+        <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
         <spring-cloud-alibaba>2.1.0.RELEASE</spring-cloud-alibaba>
     </properties>
 
@@ -127,12 +123,17 @@
             <dependency>
                 <groupId>com.istimeless</groupId>
                 <artifactId>weather-common</artifactId>
-                <version>${weather-common}</version>
+                <version>${weather-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.istimeless</groupId>
+                <artifactId>weather-redis</artifactId>
+                <version>${weather-version}</version>
             </dependency>
             <dependency>
                 <groupId>com.ls</groupId>
                 <artifactId>weather-commons</artifactId>
-                <version>${weather-common}</version>
+                <version>${weather-version}</version>
             </dependency>
             <dependency>
                 <groupId>com.ls</groupId>

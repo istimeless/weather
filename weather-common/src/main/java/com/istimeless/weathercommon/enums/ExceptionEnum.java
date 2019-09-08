@@ -16,8 +16,6 @@ public enum ExceptionEnum {
      * 返回编码
      */
     SUCCESS(1, "成功"),
-    
-    CITY_NOT_EXIST(1001, "城市不存在"),
 
     SERVICE_FAIL(8888, "服务调用失败，请稍后再试！"),
 

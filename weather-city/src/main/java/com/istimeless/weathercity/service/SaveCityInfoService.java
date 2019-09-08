@@ -1,11 +1,14 @@
 package com.istimeless.weathercity.service;
 
-import com.istimeless.weathercity.client.RedisClient;
 import com.istimeless.weathercity.entity.WeatherCity;
 import com.istimeless.weathercity.repository.WeatherCityRepository;
-import com.istimeless.weathercity.vo.CityResponse;
-import com.istimeless.weathercity.vo.District;
+import com.istimeless.weathercommon.constant.CityConstant;
+import com.istimeless.weathercommon.vo.CityResponse;
+import com.istimeless.weathercommon.vo.District;
+import com.istimeless.weathercommon.vo.WeatherCityVO;
+import com.istimeless.weatherredis.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -17,24 +20,31 @@ import java.util.*;
 @Slf4j
 @Service
 public class SaveCityInfoService {
-    
 
     private final WeatherCityRepository weatherCityRepository;
 
-    private final RedisClient redisClient;
-
-    public SaveCityInfoService(WeatherCityRepository weatherCityRepository,
-                               RedisClient redisClient) {
+    public SaveCityInfoService(WeatherCityRepository weatherCityRepository) {
         this.weatherCityRepository = weatherCityRepository;
-        this.redisClient = redisClient;
     }
     
     public void saveCityInfo(CityResponse response) {
+        //1.组装为list
         List<WeatherCity> weatherCities = new ArrayList<>();
         getCityList(response.getDistricts(), null, weatherCities);
-        Map<String, Object> redisMap = new HashMap<>(5100);
-        weatherCities.forEach(weatherCity -> redisMap.put(weatherCity.getName(), weatherCity));
-        redisClient.set(redisMap);
+        //2.保存城市代码+城市名称-城市对象
+        Map<String, WeatherCityVO> cityVOMap = new HashMap<>(5100);
+        weatherCities.forEach(weatherCity -> {
+            WeatherCityVO weatherCityVO = new WeatherCityVO();
+            BeanUtils.copyProperties(weatherCity, weatherCityVO);
+            String key = CityConstant.CODE_NAME_PREFIX + weatherCity.getAdcode() + "-" + weatherCity.getName();
+            cityVOMap.put(key, weatherCityVO);
+        });
+        RedisUtil.set(cityVOMap);
+        //3.保存城市代码列表
+        List<String> cityList = new ArrayList<>();
+        weatherCities.forEach(weatherCity -> cityList.add(weatherCity.getAdcode()));
+        RedisUtil.set(CityConstant.CITY_LIST, cityList);
+        //4.保存城市到数据库
         weatherCityRepository.saveAll(weatherCities);
     }
     

@@ -1,11 +1,10 @@
 package com.istimeless.weathercity.service;
 
-import com.istimeless.weathercity.WeatherCityApplicationTests;
-import com.istimeless.weathercity.service.CacheCityService;
+import com.istimeless.weathercity.WeatherCityVOApplicationTests;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class CacheCityServiceTest extends WeatherCityApplicationTests {
+public class CacheCityServiceTest extends WeatherCityVOApplicationTests {
 
     @Autowired
     private CacheCityService cacheCityService;

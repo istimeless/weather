@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.ls.weathercommon.config.RedisConfig,\
-  com.ls.weathercommon.config.RestTemplateConfig

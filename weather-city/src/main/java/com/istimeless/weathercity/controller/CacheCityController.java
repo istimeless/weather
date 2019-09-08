@@ -16,7 +16,7 @@ public class CacheCityController {
     @Autowired
     private CacheCityService cacheCityService;
     
-    @GetMapping("/city/cacheCity")
+    @GetMapping("/cacheCity")
     public void cacheCity(){
         cacheCityService.cacheCity();
     }
