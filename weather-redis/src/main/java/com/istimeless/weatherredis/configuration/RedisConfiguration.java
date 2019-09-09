@@ -11,17 +11,15 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.text.SimpleDateFormat;
-
 /**
  * @author lijiayin
  */
 @Configuration
 public class RedisConfiguration {
-    
+
     @Bean
-    public Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer(){
-        Jackson2JsonRedisSerializer<Object> serializer = 
+    public Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer() {
+        Jackson2JsonRedisSerializer<Object> serializer =
                 new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
@@ -31,9 +29,9 @@ public class RedisConfiguration {
         serializer.setObjectMapper(objectMapper);
         return serializer;
     }
-    
+
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory){
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(connectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());

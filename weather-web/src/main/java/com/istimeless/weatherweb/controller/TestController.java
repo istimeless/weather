@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test")
 public class TestController {
-    
+
     @Autowired
     private WeatherCityClient cityClient;
-    
+
     @Autowired
     private WeatherCollectClient collectClient;
-    
+
     @GetMapping("/city/{cityName}")
-    public Result<WeatherResponse> test(@PathVariable("cityName") String cityName){
+    public Result<WeatherResponse> test(@PathVariable("cityName") String cityName) {
         return collectClient.live(cityClient
                 .getCityCodeByCityName(cityName).getData().entrySet()
                 .stream().findFirst().orElse(null)

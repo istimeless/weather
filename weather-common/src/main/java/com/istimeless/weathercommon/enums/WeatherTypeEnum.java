@@ -15,11 +15,11 @@ public enum WeatherTypeEnum {
      */
     ALL("all", "forecast", "天气预报"),
     BASE("base", "live", "实时天气");
-    
+
     private String code;
-    
+
     private String key;
-    
+
     private String msg;
-    
+
 }

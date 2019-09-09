@@ -34,7 +34,7 @@ feign:
         connectTimeout: 5000
         readTimeOut: 15000
 logging:
-  level: 
+  level:
     com.istimeless.weatherinfo.client: debug
 weather:
   info:

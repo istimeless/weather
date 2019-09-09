@@ -33,6 +33,7 @@ public interface RedisClient {
 
     /**
      * 模糊查询key
+     *
      * @param key
      * @param <T>
      * @return

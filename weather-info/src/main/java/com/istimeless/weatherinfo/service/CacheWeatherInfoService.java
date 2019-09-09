@@ -20,35 +20,35 @@ import java.util.concurrent.*;
 @Slf4j
 @Service
 public class CacheWeatherInfoService {
-    
+
     private final WeatherInfoService weatherInfoService;
-    
+
     private final SaveWeatherInfoService saveWeatherInfoService;
 
-    public CacheWeatherInfoService(WeatherInfoService weatherInfoService, 
+    public CacheWeatherInfoService(WeatherInfoService weatherInfoService,
                                    SaveWeatherInfoService saveWeatherInfoService) {
         this.weatherInfoService = weatherInfoService;
         this.saveWeatherInfoService = saveWeatherInfoService;
     }
 
-    public void cacheWeatherLive(){
+    public void cacheWeatherLive() {
         log.info("开始缓存实时天气信息：{}", System.currentTimeMillis());
         List<Future<WeatherResponse>> futureList = weatherInfo(WeatherTypeEnum.BASE);
-        
+
         List<Live> lives = new ArrayList<>();
         futureList.forEach(future -> {
             try {
                 lives.addAll(future.get().getLives());
             } catch (Exception e) {
                 log.error("获取实时天气信息失败：{}", e.getMessage(), e);
-            } 
+            }
         });
-        
+
         saveWeatherInfoService.saveWeatherLive(lives);
         log.info("结束缓存实时天气信息：{}", System.currentTimeMillis());
     }
 
-    public void cacheWeatherForecast(){
+    public void cacheWeatherForecast() {
         log.info("开始缓存天气预报信息：{}", System.currentTimeMillis());
         List<Future<WeatherResponse>> futureList = weatherInfo(WeatherTypeEnum.ALL);
 
@@ -67,10 +67,11 @@ public class CacheWeatherInfoService {
 
     /**
      * 多线程并发获取天气信息
+     *
      * @param weatherTypeEnum
      * @return
      */
-    private List<Future<WeatherResponse>> weatherInfo(WeatherTypeEnum weatherTypeEnum){
+    private List<Future<WeatherResponse>> weatherInfo(WeatherTypeEnum weatherTypeEnum) {
         List<String> cityList = RedisUtil.get(CityConstant.CITY_LIST);
         ThreadFactoryBuilder factoryBuilder = new ThreadFactoryBuilder();
         factoryBuilder.setNameFormat("weather-info");
@@ -86,7 +87,7 @@ public class CacheWeatherInfoService {
                         weatherInfoService.weatherInfo(city, weatherTypeEnum)))
         );
         threadPoolExecutor.shutdown();
-        
+
         return futureList;
     }
 }

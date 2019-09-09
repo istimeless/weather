@@ -38,7 +38,7 @@ public class WeatherCityVO implements Serializable {
     /**
      * 城市中心点
      * 在区县级别，有28个区县不能返回中心点
-     * 在乡镇/街道界别，有9262个乡镇/街道不能返回中心点 
+     * 在乡镇/街道界别，有9262个乡镇/街道不能返回中心点
      */
     private String center;
 

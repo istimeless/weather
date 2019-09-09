@@ -16,15 +16,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @Slf4j
 @RestControllerAdvice
 public class WeatherInfoAdvice implements ResponseBodyAdvice {
-    
+
     @ExceptionHandler(Exception.class)
-    public Result orderQueryAdvice(Exception e){
+    public Result orderQueryAdvice(Exception e) {
         log.error("捕获未知异常：{}", e.getMessage(), e);
         return Result.failure(WeatherInfoEnum.DEFAULT.getCode(), e.getMessage());
     }
 
     @ExceptionHandler(WeatherInfoException.class)
-    public Result orderQueryAdvice(WeatherInfoException e){
+    public Result orderQueryAdvice(WeatherInfoException e) {
         log.error("捕获自定义异常：{}", e.getMessage(), e);
         return Result.failure(e.getCode(), e.getMessage());
     }
@@ -39,7 +39,7 @@ public class WeatherInfoAdvice implements ResponseBodyAdvice {
                                   MediaType mediaType, Class aClass,
                                   ServerHttpRequest serverHttpRequest,
                                   ServerHttpResponse serverHttpResponse) {
-        if(o instanceof Result){
+        if (o instanceof Result) {
             return o;
         }
         return Result.success(o);

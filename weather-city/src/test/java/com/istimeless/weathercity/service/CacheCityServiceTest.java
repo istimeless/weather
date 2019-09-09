@@ -8,7 +8,7 @@ public class CacheCityServiceTest extends WeatherCityVOApplicationTests {
 
     @Autowired
     private CacheCityService cacheCityService;
-    
+
     @Test
     public void cacheCity() {
         cacheCityService.cacheCity();

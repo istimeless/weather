@@ -17,10 +17,10 @@ import java.util.List;
 public class WeatherResponse {
 
     /**
-     * 返回状态	
-     * 
+     * 返回状态
+     * <p>
      * 值为0或1
-     *
+     * <p>
      * 1：成功；0：失败
      */
     private Integer status;

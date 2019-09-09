@@ -18,14 +18,14 @@ import java.util.*;
 @Slf4j
 @Service
 public class SaveWeatherInfoService {
-    
+
     private final WeatherLiveRepository weatherLiveRepository;
 
     public SaveWeatherInfoService(WeatherLiveRepository weatherLiveRepository) {
         this.weatherLiveRepository = weatherLiveRepository;
     }
 
-    public void saveWeatherLive(List<Live> lives){
+    public void saveWeatherLive(List<Live> lives) {
         List<WeatherLive> weatherLives = new ArrayList<>();
         Map<String, WeatherLive> liveMap = new HashMap<>(5100);
         lives.forEach(live -> {
@@ -42,10 +42,10 @@ public class SaveWeatherInfoService {
         weatherLiveRepository.saveAll(weatherLives);
     }
 
-    public void saveWeatherForecast(List<Forecast> forecasts){
+    public void saveWeatherForecast(List<Forecast> forecasts) {
         Map<String, Forecast> forecastMap = new HashMap<>(5100);
-        forecasts.forEach(forecast -> 
-            forecastMap.put(WeatherInfoConstant.WEATHER_FORECAST_PREFIX + forecast.getAdcode(), forecast)
+        forecasts.forEach(forecast ->
+                forecastMap.put(WeatherInfoConstant.WEATHER_FORECAST_PREFIX + forecast.getAdcode(), forecast)
         );
         RedisUtil.set(forecastMap);
     }

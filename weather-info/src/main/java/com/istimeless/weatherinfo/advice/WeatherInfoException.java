@@ -7,15 +7,15 @@ import lombok.Getter;
  */
 @Getter
 public class WeatherInfoException extends RuntimeException {
-    
+
     private Integer code;
 
-    public WeatherInfoException(Integer code, String message){
+    public WeatherInfoException(Integer code, String message) {
         super(message);
         this.code = code;
     }
 
-    public WeatherInfoException(WeatherInfoEnum weatherInfoEnum){
+    public WeatherInfoException(WeatherInfoEnum weatherInfoEnum) {
         super(weatherInfoEnum.getMsg());
         this.code = weatherInfoEnum.getCode();
     }

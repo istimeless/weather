@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 public class CacheWeatherInfoController {
-    
+
     private final CacheWeatherInfoService cacheWeatherInfoService;
 
     public CacheWeatherInfoController(CacheWeatherInfoService cacheWeatherInfoService) {
@@ -19,12 +19,12 @@ public class CacheWeatherInfoController {
     }
 
     @GetMapping("/cacheWeatherLive")
-    public void cacheWeatherLive(){
+    public void cacheWeatherLive() {
         cacheWeatherInfoService.cacheWeatherLive();
     }
 
     @GetMapping("/cacheWeatherForecast")
-    public void cacheWeatherForecast(){
+    public void cacheWeatherForecast() {
         cacheWeatherInfoService.cacheWeatherForecast();
     }
 }

@@ -13,9 +13,9 @@ import java.util.List;
  */
 @RestController
 public class CityInfoController {
-    
+
     @GetMapping("/getCityInfo")
-    public List<WeatherCityVO> getWeatherCityByCityName(@RequestParam String cityName){
+    public List<WeatherCityVO> getWeatherCityByCityName(@RequestParam String cityName) {
         return RedisUtil.getLikes(cityName);
     }
 }

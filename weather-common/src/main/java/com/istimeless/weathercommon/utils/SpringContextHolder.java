@@ -11,27 +11,27 @@ import java.util.Map;
  */
 @SuppressWarnings("unchecked")
 public class SpringContextHolder implements ApplicationContextAware {
-    
+
     private static ApplicationContext applicationContext;
-    
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        SpringContextHolder.applicationContext = applicationContext;
-    }
-    
-    public static <T> T getBean(String beanName){
+
+    public static <T> T getBean(String beanName) {
         return (T) applicationContext.getBean(beanName);
     }
 
-    public static <T> T getBean(Class<?> cls){
+    public static <T> T getBean(Class<?> cls) {
         return (T) applicationContext.getBean(cls);
     }
 
-    public static <T> T getBean(String beanName, Class<?> cls){
+    public static <T> T getBean(String beanName, Class<?> cls) {
         return (T) applicationContext.getBean(beanName, cls);
     }
 
-    public static <T> Map<String, T> getBeans(Class<?> cls){
+    public static <T> Map<String, T> getBeans(Class<?> cls) {
         return (Map<String, T>) applicationContext.getBeansOfType(cls);
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        SpringContextHolder.applicationContext = applicationContext;
     }
 }

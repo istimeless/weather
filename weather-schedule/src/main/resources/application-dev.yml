@@ -28,7 +28,7 @@ feign:
         connectTimeout: 5000
         readTimeOut: 600000
 logging:
-  level: 
+  level:
     com.istimeless.weatherschedule.client: debug
 management:
   endpoints:

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "weather.info")
 public class WeatherInfoProperties {
-    
+
     private String url;
-    
+
     private String key;
 }

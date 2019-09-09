@@ -26,7 +26,7 @@ public class SaveCityInfoService {
     public SaveCityInfoService(WeatherCityRepository weatherCityRepository) {
         this.weatherCityRepository = weatherCityRepository;
     }
-    
+
     public void saveCityInfo(CityResponse response) {
         //1.组装为list
         List<WeatherCity> weatherCities = new ArrayList<>();
@@ -47,8 +47,8 @@ public class SaveCityInfoService {
         //4.保存城市到数据库
         weatherCityRepository.saveAll(weatherCities);
     }
-    
-    private void getCityList(List<District> districts, String parent, List<WeatherCity> weatherCities){
+
+    private void getCityList(List<District> districts, String parent, List<WeatherCity> weatherCities) {
         districts.forEach(district -> {
             Date now = new Date();
             weatherCities.add(WeatherCity.builder()
@@ -61,7 +61,7 @@ public class SaveCityInfoService {
                     .createTime(now)
                     .updateTime(now)
                     .build());
-            if(!CollectionUtils.isEmpty(district.getDistricts())){
+            if (!CollectionUtils.isEmpty(district.getDistricts())) {
                 getCityList(district.getDistricts(), district.getAdcode(), weatherCities);
             }
         });
