@@ -45,10 +45,6 @@ feign:
 logging:
   level:
     com.istimeless.weathercity.client: debug
-weather:
-  city:
-    url: https://restapi.amap.com/v3/config/district?
-    key: 2e97d4b1941e300ff6979f2d274a37ab
 management:
   endpoints:
     web:
