@@ -1,7 +1,0 @@
-weather:
-  amap:
-    city:
-      url: https://restapi.amap.com/v3/config/district?
-      key: *
-
-

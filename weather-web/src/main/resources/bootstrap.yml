@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: weather-web
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    config:
+      fail-fast: true
+      name: ${spring.application.name}
+      profile: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: weather-config
+    nacos:
+      discovery:
+        server-addr: 106.12.88.80:8848
+server:
+  port: 9002

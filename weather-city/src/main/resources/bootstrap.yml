@@ -1,5 +1,5 @@
 spring:
   application:
-    name: weather-gateway
+    name: weather-city
   profiles:
     active: dev

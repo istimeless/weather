@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.5.RELEASE</version>
+        <version>2.1.8.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.ls</groupId>
+    <groupId>com.istimeless</groupId>
     <artifactId>weather-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>weather-parent</name>
     <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
-    
+
     <modules>
-        <module>weather-service</module>
+        <module>weather-city</module>
         <module>weather-common</module>
-        <module>weather-collect-amap</module>
-        <module>weather-city-amap</module>
-        <module>weather-eureka</module>
-        <module>weather-config</module>
+        <module>weather-redis</module>
+        <module>weather-info</module>
         <module>weather-gateway</module>
+        <module>weather-schedule</module>
+        <module>weather-web</module>
     </modules>
 
     <properties>
@@ -41,9 +41,10 @@
         <okhttp>3.10.0</okhttp>
         <weather-collect-amap-client>0.0.1-SNAPSHOT</weather-collect-amap-client>
         <weather-city-amap-client>0.0.1-SNAPSHOT</weather-city-amap-client>
-        <weather-common>0.0.1-SNAPSHOT</weather-common>
+        <weather-version>0.0.1-SNAPSHOT</weather-version>
         <ratelimit>2.2.3.RELEASE</ratelimit>
-        <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
+        <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
+        <spring-cloud-alibaba>2.1.0.RELEASE</spring-cloud-alibaba>
     </properties>
 
     <dependencies>
@@ -64,6 +65,13 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -112,10 +120,21 @@
                 <artifactId>okhttp</artifactId>
                 <version>${okhttp}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.istimeless</groupId>
+                <artifactId>weather-common</artifactId>
+                <version>${weather-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.istimeless</groupId>
+                <artifactId>weather-redis</artifactId>
+                <version>${weather-version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.ls</groupId>
-                <artifactId>weather-common</artifactId>
-                <version>${weather-common}</version>
+                <artifactId>weather-commons</artifactId>
+                <version>${weather-version}</version>
             </dependency>
             <dependency>
                 <groupId>com.ls</groupId>

@@ -1,0 +1,50 @@
+server:
+  port: 18000
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        #指定sentinel控制台地址
+        dashboard: 127.0.0.1:8080
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/weather?serverTimezone=Asia/Shanghai
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: 1qaz@WSX
+  jackson:
+    default-property-inclusion: non_null
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+ribbon:
+  eager-load:
+    enabled: true
+feign:
+  httpclient:
+    enabled: true
+  client:
+    config:
+      default:
+        loggerLevel: basic
+        connectTimeout: 5000
+        readTimeOut: 15000
+logging:
+  level:
+    com.istimeless.weatherinfo.client: debug
+weather:
+  info:
+    url: https://restapi.amap.com/v3/weather/weatherInfo?
+    key: 2e97d4b1941e300ff6979f2d274a37ab
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
