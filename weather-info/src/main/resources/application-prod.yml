@@ -36,10 +36,6 @@ feign:
 logging:
   level:
     com.istimeless.weatherinfo.client: debug
-weather:
-  info:
-    url: https://restapi.amap.com/v3/weather/weatherInfo?
-    key: 2e97d4b1941e300ff6979f2d274a37ab
 management:
   endpoints:
     web:
