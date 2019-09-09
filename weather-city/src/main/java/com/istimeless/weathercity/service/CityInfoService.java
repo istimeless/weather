@@ -27,7 +27,9 @@ public class CityInfoService {
     public CityResponse cityInfo(CityRequest request) {
         String url = getRequestUrl(request);
         log.info("请求城市信息url：{}", url);
-        return restTemplate.getForObject(url, CityResponse.class);
+        CityResponse result = restTemplate.getForObject(url, CityResponse.class);
+        log.info("请求城市信息返回结果：{}", result);
+        return result;
     }
 
     private String getRequestUrl(CityRequest request){

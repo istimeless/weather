@@ -1,0 +1,40 @@
+server:
+  port: 10086
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 106.12.88.80:8848
+    sentinel:
+      transport:
+        #指定sentinel控制台地址
+        dashboard: 106.12.88.80:8080
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    default-property-inclusion: non_null
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+ribbon:
+  eager-load:
+    enabled: true
+feign:
+  httpclient:
+    enabled: true
+  client:
+    config:
+      default:
+        loggerLevel: basic
+        connectTimeout: 5000
+        readTimeOut: 600000
+logging:
+  level: 
+    com.istimeless.weatherschedule.client: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always

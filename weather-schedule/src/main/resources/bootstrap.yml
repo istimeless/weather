@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: weather-schedule
+  profiles:
+    active: dev

@@ -32,6 +32,7 @@ public class CacheWeatherInfoService {
     }
 
     public void cacheWeatherLive(){
+        log.info("开始缓存实时天气信息：{}", System.currentTimeMillis());
         List<Future<WeatherResponse>> futureList = weatherInfo(WeatherTypeEnum.BASE);
         
         List<Live> lives = new ArrayList<>();
@@ -44,9 +45,11 @@ public class CacheWeatherInfoService {
         });
         
         saveWeatherInfoService.saveWeatherLive(lives);
+        log.info("结束缓存实时天气信息：{}", System.currentTimeMillis());
     }
 
     public void cacheWeatherForecast(){
+        log.info("开始缓存天气预报信息：{}", System.currentTimeMillis());
         List<Future<WeatherResponse>> futureList = weatherInfo(WeatherTypeEnum.ALL);
 
         List<Forecast> forecasts = new ArrayList<>();
@@ -59,6 +62,7 @@ public class CacheWeatherInfoService {
         });
 
         saveWeatherInfoService.saveWeatherForecast(forecasts);
+        log.info("结束缓存天气预报信息：{}", System.currentTimeMillis());
     }
 
     /**
@@ -73,7 +77,7 @@ public class CacheWeatherInfoService {
         ThreadFactory threadFactory = factoryBuilder.build();
         LinkedBlockingDeque<Runnable> blockingDeque = new LinkedBlockingDeque<>();
         ThreadPoolExecutor threadPoolExecutor =
-                new ThreadPoolExecutor(200, 200, 0, TimeUnit.SECONDS,
+                new ThreadPoolExecutor(100, 100, 0, TimeUnit.SECONDS,
                         blockingDeque, threadFactory, new ThreadPoolExecutor.AbortPolicy());
 
         List<Future<WeatherResponse>> futureList = new ArrayList<>();

@@ -24,9 +24,11 @@ public class CacheCityService {
     }
     
     public void cacheCity() {
+        log.info("开始缓存城市信息：{}", System.currentTimeMillis());
         CityResponse cityResponse = cityInfoService.cityInfo(CityRequest.builder().subdistrict(3).build());
         if(WeatherCityEnum.SUCCESS.getCode().equals(cityResponse.getStatus())){
             saveCityInfoService.saveCityInfo(cityResponse);
         }
+        log.info("结束缓存城市信息：{}", System.currentTimeMillis());
     }
 }
