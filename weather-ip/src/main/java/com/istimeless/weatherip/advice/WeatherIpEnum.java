@@ -1,4 +1,4 @@
-package com.istimeless.weatherinfo.advice;
+package com.istimeless.weatherip.advice;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,12 +8,14 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum WeatherInfoEnum {
+public enum WeatherIpEnum {
 
     /**
      * 返回编码
      */
     SUCCESS(1, "成功"),
+
+    CITY_NOT_EXIST(1001, "城市不存在"),
 
     SERVICE_FAIL(8888, "服务调用失败，请稍后再试！"),
 

@@ -1,5 +1,5 @@
 spring:
   application:
-    name: weather-web
+    name: weather-ip
   profiles:
     active: dev

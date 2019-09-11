@@ -16,11 +16,12 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>weather-city</module>
         <module>weather-common</module>
         <module>weather-redis</module>
-        <module>weather-info</module>
         <module>weather-gateway</module>
+        <module>weather-city</module>
+        <module>weather-info</module>
+        <module>weather-ip</module>
         <module>weather-schedule</module>
         <module>weather-web</module>
     </modules>

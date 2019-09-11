@@ -45,7 +45,7 @@ public class IpUtil {
                 }
             }
             // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
-            if (StringUtils.isBlank(ipAddress) && ipAddress.indexOf(SPLIT) > 0) {
+            if (StringUtils.isNotBlank(ipAddress) && ipAddress.indexOf(SPLIT) > 0) {
                 ipAddress = ipAddress.substring(0, ipAddress.indexOf(SPLIT));
             }
         } catch (Exception e) {

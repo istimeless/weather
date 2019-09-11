@@ -2,6 +2,7 @@ package com.istimeless.weatherinfo.controller;
 
 import com.istimeless.weathercommon.constant.WeatherInfoConstant;
 import com.istimeless.weathercommon.vo.Forecast;
+import com.istimeless.weatherinfo.aspect.IpToAdcode;
 import com.istimeless.weatherinfo.entity.WeatherLive;
 import com.istimeless.weatherredis.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -16,13 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WeatherInfoController {
 
+    @IpToAdcode
     @GetMapping("/weatherLive")
-    public WeatherLive weatherLive(@RequestParam String adcode) {
+    public WeatherLive weatherLive(@RequestParam(required = false) String adcode) {
         return RedisUtil.get(WeatherInfoConstant.WEATHER_LIVE_PREFIX + adcode);
     }
 
+    @IpToAdcode
     @GetMapping("/weatherForecast")
-    public Forecast weatherForecast(@RequestParam String adcode) {
+    public Forecast weatherForecast(@RequestParam(required = false) String adcode) {
         return RedisUtil.get(WeatherInfoConstant.WEATHER_FORECAST_PREFIX + adcode);
     }
 }
