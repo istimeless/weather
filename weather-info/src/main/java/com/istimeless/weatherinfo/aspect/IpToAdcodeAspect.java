@@ -41,10 +41,11 @@ public class IpToAdcodeAspect {
             HttpServletRequest httpServletRequest = ((ServletRequestAttributes) 
                     RequestContextHolder.getRequestAttributes()).getRequest();
             Result<WeatherIpVO> ipInfo = weatherIpClient.ipInfo(IpUtil.getIpAddr(httpServletRequest));
-            if(!Objects.isNull(ipInfo)){
+            if(!Objects.isNull(ipInfo) || !ipInfo.getCode().equals(WeatherInfoEnum.SUCCESS.getCode())){
                 WeatherIpVO data = ipInfo.getData();
                 args[0] = data.getAdcode();
             }else {
+                log.error("调用ip查询服务异常：{}", ipInfo.getMsg());
                 throw new WeatherInfoException(WeatherInfoEnum.SERVICE_FAIL.getCode(), "调用ip查询服务异常");
             }
         }
