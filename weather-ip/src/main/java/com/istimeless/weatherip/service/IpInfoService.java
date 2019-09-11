@@ -25,9 +25,9 @@ public class IpInfoService {
     
     public IpResponse ipInfo(String ip){
         String url = properties.getUrl() + "key=" + properties.getKey() + "&ip=" + ip;
-        log.debug("请求IP信息url：{}", url);
+        log.info("请求IP信息url：{}", url);
         IpResponse result = restTemplate.getForObject(url, IpResponse.class);
-        log.debug("请求IP信息返回：{}", result);
+        log.info("请求IP信息返回：{}", result);
         return result;
     }
 }
