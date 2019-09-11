@@ -33,16 +33,12 @@
         <commons-collections>3.2.2</commons-collections>
         <commons-io>2.6</commons-io>
         <guava>23.0</guava>
-        <beetlsql>2.11.0</beetlsql>
         <beetl>2.9.6</beetl>
         <druid>1.1.14</druid>
         <fastjson>1.2.46</fastjson>
         <mysql-binlog>0.20.1</mysql-binlog>
         <okhttp>3.10.0</okhttp>
-        <weather-collect-amap-client>0.0.1-SNAPSHOT</weather-collect-amap-client>
-        <weather-city-amap-client>0.0.1-SNAPSHOT</weather-city-amap-client>
         <weather-version>0.0.1-SNAPSHOT</weather-version>
-        <ratelimit>2.2.3.RELEASE</ratelimit>
         <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
         <spring-cloud-alibaba>2.1.0.RELEASE</spring-cloud-alibaba>
     </properties>
@@ -91,16 +87,6 @@
                 <version>${guava}</version>
             </dependency>
             <dependency>
-                <groupId>com.ibeetl</groupId>
-                <artifactId>beetlsql</artifactId>
-                <version>${beetlsql}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.ibeetl</groupId>
-                <artifactId>beetl</artifactId>
-                <version>${beetl}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid}</version>
@@ -130,26 +116,6 @@
                 <groupId>com.istimeless</groupId>
                 <artifactId>weather-redis</artifactId>
                 <version>${weather-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.ls</groupId>
-                <artifactId>weather-commons</artifactId>
-                <version>${weather-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.ls</groupId>
-                <artifactId>weather-collect-amap-client</artifactId>
-                <version>${weather-collect-amap-client}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.ls</groupId>
-                <artifactId>weather-city-amap-client</artifactId>
-                <version>${weather-city-amap-client}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.marcosbarbero.cloud</groupId>
-                <artifactId>spring-cloud-zuul-ratelimit</artifactId>
-                <version>${ratelimit}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
