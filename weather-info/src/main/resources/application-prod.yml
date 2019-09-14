@@ -36,6 +36,7 @@ feign:
 logging:
   level:
     com.istimeless.weatherinfo.client: debug
+  file: ./weather-info.log
 management:
   endpoints:
     web:

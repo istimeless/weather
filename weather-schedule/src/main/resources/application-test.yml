@@ -1,14 +1,14 @@
 server:
-  port: 10000
+  port: 10001
 spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 106.12.88.80:8848
+        server-addr: 127.0.0.1:8848
     sentinel:
       transport:
         #指定sentinel控制台地址
-        dashboard: 106.12.88.80:8080
+        dashboard: 127.0.0.1:8080
   main:
     allow-bean-definition-overriding: true
   jackson:
@@ -24,13 +24,13 @@ feign:
   client:
     config:
       default:
-        loggerLevel: basic
+        loggerLevel: full
         connectTimeout: 5000
         readTimeOut: 600000
 logging:
   level:
     com.istimeless.weatherschedule.client: debug
-  file: ./weather-schedule.log
+  file: ./weather-schedule/weather-schedule.log
 management:
   endpoints:
     web:

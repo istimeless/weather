@@ -46,6 +46,7 @@ feign:
 logging:
   level:
     com.istimeless.weathercity.client: debug
+  file: ./weather-city.log
 management:
   endpoints:
     web:

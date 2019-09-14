@@ -1,5 +1,5 @@
 server:
-  port: 16000
+  port: 16001
 spring:
   cloud:
     nacos:
@@ -23,4 +23,4 @@ management:
     health:
       show-details: always
 logging:
-  file: ./weather-gateway.log
+  file: ./weather-gateway/weather-gateway.log

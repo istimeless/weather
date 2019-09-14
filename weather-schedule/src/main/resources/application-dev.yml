@@ -1,5 +1,5 @@
 server:
-  port: 10086
+  port: 10000
 spring:
   cloud:
     nacos:
@@ -30,6 +30,7 @@ feign:
 logging:
   level:
     com.istimeless.weatherschedule.client: debug
+  file: ./weather-schedule.log
 management:
   endpoints:
     web:

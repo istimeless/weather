@@ -1,16 +1,22 @@
 server:
-  port: 10000
+  port: 18001
 spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 106.12.88.80:8848
+        server-addr: 127.0.0.1:8848
     sentinel:
       transport:
         #指定sentinel控制台地址
-        dashboard: 106.12.88.80:8080
+        dashboard: 127.0.0.1:8080
   main:
     allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/weather?serverTimezone=Asia/Shanghai
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: 1qaz@WSX
   jackson:
     default-property-inclusion: non_null
     time-zone: GMT+8
@@ -26,11 +32,11 @@ feign:
       default:
         loggerLevel: basic
         connectTimeout: 5000
-        readTimeOut: 600000
+        readTimeOut: 15000
 logging:
   level:
-    com.istimeless.weatherschedule.client: debug
-  file: ./weather-schedule.log
+    com.istimeless.weatherinfo.client: debug
+  file: ./weather-info/weather-info.log
 management:
   endpoints:
     web:
