@@ -27,9 +27,9 @@ public class WeatherInfoService {
     public WeatherResponse weatherInfo(String city, WeatherTypeEnum type) {
         String url = properties.getUrl() + "extensions=" + type.getCode()
                 + "&city=" + city + "&key=" + properties.getKey();
-        log.debug("请求天气信息url：{}", url);
+        log.info("请求天气信息url：{}", url);
         WeatherResponse result = restTemplate.getForObject(url, WeatherResponse.class);
-        log.debug("请求天气信息返回：{}", result);
+        log.info("请求天气信息返回：{}", result);
         return result;
     }
 }
