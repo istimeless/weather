@@ -31,7 +31,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <java.version>1.8</java.version>
         <commons-collections>3.2.2</commons-collections>
-        <commons-io>2.6</commons-io>
+        <commons-io>2.7</commons-io>
         <guava>23.0</guava>
         <beetlsql>2.11.0</beetlsql>
         <beetl>2.9.6</beetl>
